@@ -1,13 +1,14 @@
 package cn.herbert.reminder_java.controller;
 
+import cn.herbert.reminder_java.mapper.FoodMapper;
 import cn.herbert.reminder_java.mapper.UserMapper;
+import cn.herbert.reminder_java.pojo.Food;
 import cn.herbert.reminder_java.pojo.User;
+import cn.herbert.reminder_java.service.LoginService;
 import cn.herbert.reminder_java.service.UserService;
+import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,21 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginService loginService;
 
-//    @GetMapping("/user/findByEmail")
-//    @ResponseBody
-//    public String getUser(@RequestBody String email) {
-//        return userService.findByEmail(email);
-//    }
-
-    @GetMapping("/user")
-    public List<User> getUsers() {
-        List<User> users = userService.getUsers();
-        for (User user : users) {
-            System.out.println(user);
-        }
-
-        return users;
+    @CrossOrigin
+    @PostMapping("/auth/loginByPassword")
+    public String loginByPassword(@RequestBody User user) {
+        return loginService.loginByPassword(user);
     }
-
 }
