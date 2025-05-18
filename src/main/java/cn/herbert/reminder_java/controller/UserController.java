@@ -6,7 +6,9 @@ import cn.herbert.reminder_java.pojo.Food;
 import cn.herbert.reminder_java.pojo.User;
 import cn.herbert.reminder_java.service.LoginService;
 import cn.herbert.reminder_java.service.UserService;
+import cn.herbert.reminder_java.utils.JwtUtil;
 import cn.hutool.json.JSONUtil;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,5 +26,13 @@ public class UserController {
     @PostMapping("/auth/loginByPassword")
     public String loginByPassword(@RequestBody User user) {
         return loginService.loginByPassword(user);
+    }
+
+    @PostMapping("/auth/info")
+    public String getUserInfo(@RequestParam String token) {
+        // 1. 获取用户ID
+        String userId = JwtUtil.getUserId(token);
+
+        return userService.getUserById(userId);
     }
 }

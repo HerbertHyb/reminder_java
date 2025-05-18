@@ -37,10 +37,7 @@ public class LoginService {
             String token = JwtUtil.getToken(dbUser.getId().toString());
 
             msg = Msg.success("Login successful").add("token", token)
-                    .add("username", dbUser.getUsername())
-                    .add("id", dbUser.getId())
-                    .add("phone", dbUser.getPhone())
-                    .add("email", dbUser.getEmail());
+                    .add("user", dbUser);
         }
 
         return JSONUtil.toJsonStr(msg);

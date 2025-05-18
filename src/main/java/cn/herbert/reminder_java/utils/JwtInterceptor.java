@@ -1,5 +1,7 @@
 package cn.herbert.reminder_java.utils;
 
+import cn.herbert.reminder_java.auth.Msg;
+import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
@@ -14,7 +16,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         StringBuffer requestURL = request.getRequestURL();
         // 获取令牌
-        String token = request.getHeader("LINGPAI");
+        String token = request.getHeader("token");
         System.out.println("url:" + requestURL);
         System.out.println("token:" + token);
 
@@ -34,7 +36,10 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (b) {
                 return true;
             } else {
-                throw new RuntimeException("token 失效了 请重新登录");
+                // 返回给前端
+                Msg msg = Msg.fail("token invalid");
+                response.getWriter().write(JSONUtil.toJsonStr(msg));
+                return false;
             }
         }
         return true;
