@@ -29,12 +29,17 @@ public class UserController {
         return loginService.loginByPassword(user);
     }
 
-    @PostMapping("/auth/info")
+    @GetMapping("/auth/info")
     @JwtToken
     public String getUserInfo(@RequestHeader("Authorization") String token) {
         // 1. 获取用户ID
         String userId = JwtUtil.getUserId(token);
 
         return userService.getUserById(userId);
+    }
+
+    @PostMapping("/auth/register")
+    public String register(@RequestBody User user) {
+        return loginService.register(user);
     }
 }

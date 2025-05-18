@@ -45,4 +45,37 @@ public class LoginService extends ServiceImpl<UserMapper, User> {
         return JSONUtil.toJsonStr(msg);
 
     }
+
+    public String register(User user) {
+        // 1. 检查手机号是否已注册
+        User existingUser = userService.getOne(new QueryWrapper<User>().eq("phone", user.getPhone()));
+        // 2. 检查邮箱是否已注册
+        User existingEmailUser = userService.getOne(new QueryWrapper<User>().eq("email", user.getEmail()));
+        Msg msg = null;
+
+        if (existingUser != null) {
+            msg = Msg.fail("Phone number already registered");
+            return JSONUtil.toJsonStr(msg);
+        }
+
+        if (existingEmailUser != null) {
+            msg = Msg.fail("Email already registered");
+            return JSONUtil.toJsonStr(msg);
+        }
+
+        // 2. 如果手机号未注册，保存用户信息
+        boolean save = userService.save(user);
+        // 获取用户ID
+        User dbUser = userService.getOne(new QueryWrapper<User>().eq("phone", user.getPhone()));
+
+        if (save) {
+            String token = JwtUtil.getToken(dbUser.getId().toString());
+            msg = Msg.success("Registration successful").add("token", token)
+                    .add("user", dbUser);
+        } else {
+            msg = Msg.fail("Registration failed");
+        }
+
+        return JSONUtil.toJsonStr(msg);
+    }
 }

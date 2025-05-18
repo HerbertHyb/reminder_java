@@ -35,4 +35,6 @@ public class Food {
     private LocalDateTime updatedAt;
     private String unit;
     private String info;
+    @TableField("is_sent")
+    private Boolean isSent;
 }
