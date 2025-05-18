@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
-  port: 8000
+  port: 8009
 
 mybatis-plus:
   configuration:

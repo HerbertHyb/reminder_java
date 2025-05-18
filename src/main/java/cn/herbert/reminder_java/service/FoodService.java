@@ -3,6 +3,7 @@ package cn.herbert.reminder_java.service;
 import cn.herbert.reminder_java.auth.Msg;
 import cn.herbert.reminder_java.mapper.FoodMapper;
 import cn.herbert.reminder_java.pojo.Food;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         } else {
             msg = Msg.success("Food found").add("food", foodList);
         }
-        return msg.toString();
+        return JSONUtil.toJsonStr(msg);
     }
 
     public String addFood(Food food) {
@@ -36,7 +37,7 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         } else {
             msg = Msg.fail("Failed to add food");
         }
-        return msg.toString();
+        return JSONUtil.toJsonStr(msg);
     }
 
     public String deleteFoodById(String foodId) {
@@ -47,7 +48,7 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         } else {
             msg = Msg.fail("Failed to delete food");
         }
-        return msg.toString();
+        return JSONUtil.toJsonStr(msg);
     }
 
     public String updateFood(Food food) {
@@ -58,7 +59,7 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         } else {
             msg = Msg.fail("Failed to update food");
         }
-        return msg.toString();
+        return JSONUtil.toJsonStr(msg);
     }
 
 }
