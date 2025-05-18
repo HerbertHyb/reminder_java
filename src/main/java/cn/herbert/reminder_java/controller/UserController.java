@@ -6,6 +6,7 @@ import cn.herbert.reminder_java.pojo.Food;
 import cn.herbert.reminder_java.pojo.User;
 import cn.herbert.reminder_java.service.LoginService;
 import cn.herbert.reminder_java.service.UserService;
+import cn.herbert.reminder_java.utils.JwtToken;
 import cn.herbert.reminder_java.utils.JwtUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.val;
@@ -29,7 +30,8 @@ public class UserController {
     }
 
     @PostMapping("/auth/info")
-    public String getUserInfo(@RequestParam String token) {
+    @JwtToken
+    public String getUserInfo(@RequestHeader("Authorization") String token) {
         // 1. 获取用户ID
         String userId = JwtUtil.getUserId(token);
 

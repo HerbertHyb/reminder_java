@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class JwtUtil {
     //令牌有效时间
-    private static final long EXPIREE_TIME = 5 * 60 * 1000;
+    private static final long EXPIREE_TIME = 60 * 60 * 1000;
 
     private static final String SECRECT = "herbert";
 
@@ -38,13 +38,27 @@ public class JwtUtil {
 
     //校验通行证是否正确
     public static boolean checkToken(String token) {
+        // 1. 基础校验
+        if (token == null || token.trim().isEmpty()) {
+            return false;
+        }
+
         try {
+            // 2. 解析并验证令牌
             Algorithm algorithm = Algorithm.HMAC256(SECRECT);
-            JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-            DecodedJWT verify = jwtVerifier.verify(token);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+
+            // 3. 验证令牌签名和过期时间
+            DecodedJWT jwt = verifier.verify(token);
+
+            // 5. 验证通过
             return true;
         } catch (JWTVerificationException ex) {
-            throw new RuntimeException("token invalid");
+            // 捕获各种JWT验证异常(签名无效、过期等)
+            return false;
+        } catch (Exception ex) {
+            // 捕获其他意外异常(如算法不支持等)
+            return false;
         }
 
     }

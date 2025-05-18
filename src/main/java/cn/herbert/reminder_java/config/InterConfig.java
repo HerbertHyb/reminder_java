@@ -2,6 +2,7 @@ package cn.herbert.reminder_java.config;
 
 import cn.herbert.reminder_java.utils.JwtInterceptor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
 public class InterConfig implements WebMvcConfigurer {
     //通用来处理各种跨域的问题
     @Override
@@ -37,7 +39,7 @@ public class InterConfig implements WebMvcConfigurer {
                 // 允许跨域的路径
                 .addMapping("/**")
                 // 允许跨域的path
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*")
                 // 允许凭证
                 .allowCredentials(true)
                 // 允许通过方法

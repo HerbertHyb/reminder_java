@@ -1,15 +1,17 @@
 package cn.herbert.reminder_java.service;
 
 import cn.herbert.reminder_java.auth.Msg;
+import cn.herbert.reminder_java.mapper.UserMapper;
 import cn.herbert.reminder_java.pojo.User;
 import cn.herbert.reminder_java.utils.JwtUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class LoginService extends ServiceImpl<UserMapper, User> {
 
     @Autowired
     private UserService userService;

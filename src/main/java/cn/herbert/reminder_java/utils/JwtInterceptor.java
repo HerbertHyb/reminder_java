@@ -16,7 +16,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         StringBuffer requestURL = request.getRequestURL();
         // 获取令牌
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
         System.out.println("url:" + requestURL);
         System.out.println("token:" + token);
 

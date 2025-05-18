@@ -1,5 +1,7 @@
 package cn.herbert.reminder_java.pojo;
 
+import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @TableName("food")
 public class Food {
+    @TableId(type = IdType.AUTO)
     private Integer id;
     @TableField("user_id")
     private Integer userId;
