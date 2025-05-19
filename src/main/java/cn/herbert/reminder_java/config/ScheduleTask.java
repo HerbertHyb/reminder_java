@@ -68,45 +68,6 @@ public class ScheduleTask {
                 javaMailSender.send(mailMessage);
             }
         });
-//        // 取出所有数据
-//        foodMapper.selectList(null).forEach(food -> {
-//            // 检查剩余天数
-//            long remainingDays = ChronoUnit.DAYS.between(LocalDateTime.now(), food.getExpiryDate());
-//            remainingDays += 1;
-//
-//            // 获取用户邮箱
-//            Integer userId = food.getUserId();
-//            String userEmail = userMapper.selectById(userId).getEmail();
-//            // 获取食物名称
-//            String foodName = food.getName();
-//            // 邮件内容
-//            String subject = "Food Expiry Reminder";
-//            String content = foodName + " is about to expire" + remainingDays + " days";
-//            // 邮件发送者
-//            String from = "reminder2025@126.com";
-//
-//            if (remainingDays == 0) {
-//                // 发送过期邮件
-//                // System.out.println("Food " + food.getName() + " is expired.");
-//                SimpleMailMessage mailMessage = new SimpleMailMessage();
-//                mailMessage.setSubject(subject);
-//                mailMessage.setText(content);
-//                mailMessage.setTo(userEmail);
-//                mailMessage.setFrom(from);
-//                javaMailSender.send(mailMessage);
-//                // System.out.println("Email sent successfully");
-//            } else if (remainingDays > 0 && remainingDays <= 3) {
-//                // 发送即将过期邮件
-//                // System.out.println("Food " + food.getName() + " is about to expire in " + remainingDays + " days.");
-//                SimpleMailMessage mailMessage = new SimpleMailMessage();
-//                mailMessage.setSubject(subject);
-//                mailMessage.setText(content);
-//                mailMessage.setTo(userEmail);
-//                mailMessage.setFrom(from);
-//                javaMailSender.send(mailMessage);
-//                // System.out.println("Email sent successfully");
-//            }
-//        });
     }
 
     @Scheduled(cron = "0 0 23 * * ?") // 每天晚上11点执行

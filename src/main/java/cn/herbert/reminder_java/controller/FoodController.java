@@ -1,5 +1,6 @@
 package cn.herbert.reminder_java.controller;
 
+import cn.herbert.reminder_java.auth.Msg;
 import cn.herbert.reminder_java.mapper.FoodMapper;
 import cn.herbert.reminder_java.mapper.UserMapper;
 import cn.herbert.reminder_java.pojo.Food;
@@ -10,6 +11,7 @@ import cn.herbert.reminder_java.utils.JwtUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -184,46 +186,8 @@ public class FoodController {
                 javaMailSender.send(mailMessage);
             }
         });
-        return "Email sent successfully";
-//        // 取出所有数据
-//        foodMapper.selectList(null).forEach(food -> {
-//            // 检查剩余天数
-//            long remainingDays = ChronoUnit.DAYS.between(LocalDateTime.now(), food.getExpiryDate());
-//            remainingDays += 1;
-//
-//            // 获取用户邮箱
-//            Integer userId = food.getUserId();
-//            String userEmail = userMapper.selectById(userId).getEmail();
-//            // 获取食物名称
-//            String foodName = food.getName();
-//            // 邮件内容
-//            String subject = "Food Expiry Reminder";
-//            String content = foodName + " is about to expire" + remainingDays + " days";
-//            // 邮件发送者
-//            String from = "reminder2025@126.com";
-//
-//            if (remainingDays == 0) {
-//                // 发送过期邮件
-//                System.out.println("Food " + food.getName() + " is expired.");
-//                SimpleMailMessage mailMessage = new SimpleMailMessage();
-//                mailMessage.setSubject(subject);
-//                mailMessage.setText(content);
-//                mailMessage.setTo(userEmail);
-//                mailMessage.setFrom(from);
-//                javaMailSender.send(mailMessage);
-//                System.out.println("Email sent successfully");
-//            } else if (remainingDays > 0 && remainingDays <= 3) {
-//                // 发送即将过期邮件
-//                System.out.println("Food " + food.getName() + " is about to expire in " + remainingDays + " days.");
-//                SimpleMailMessage mailMessage = new SimpleMailMessage();
-//                mailMessage.setSubject(subject);
-//                mailMessage.setText(content);
-//                mailMessage.setTo(userEmail);
-//                mailMessage.setFrom(from);
-//                javaMailSender.send(mailMessage);
-//                System.out.println("Email sent successfully");
-//            }
-//        });
-//        return "Email sent successfully";
+        Msg msg = new Msg();
+
+        return JSONUtil.toJsonStr(msg.success("Email sent successfully"));
     }
 }
