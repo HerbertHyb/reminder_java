@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
 @TableName("food")
 public class Food {
     @TableId(type = IdType.AUTO)
@@ -24,7 +26,7 @@ public class Food {
     @TableField("production_date")
     private LocalDateTime productionDate;
     @TableField("shelf_life_days")
-    private Integer shelfLifeDate;
+    private Integer shelfLifeDays;
     @TableField("expiry_date")
     private LocalDateTime expiryDate;
     private Integer quantity;

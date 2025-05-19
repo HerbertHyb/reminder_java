@@ -1,6 +1,7 @@
 package cn.herbert.reminder_java.controller;
 
 import cn.herbert.reminder_java.pojo.Food;
+import cn.herbert.reminder_java.pojo.FoodDto;
 import cn.herbert.reminder_java.service.FoodService;
 import cn.herbert.reminder_java.utils.JwtToken;
 import cn.herbert.reminder_java.utils.JwtUtil;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 public class FoodController {
@@ -27,20 +29,30 @@ public class FoodController {
 
     @PostMapping("/food/add")
     @JwtToken
-    public String addFood(@RequestBody Food food, @RequestHeader("Authorization") String token) {
-        food.setUserId(Integer.valueOf(JwtUtil.getUserId(token)));
-        food.setExpiryDate(LocalDateTime.now());
-        food.setCreatedAt(LocalDateTime.now());
-        food.setStatus("0");
-        food.setProductionDate(LocalDateTime.now());
-        food.setShelfLifeDate(10);
-        food.setQuantity(1);
-        food.setUnit("kg");
-        food.setCategory("0");
-        food.setImageUrl("https://example.com/image.jpg");
-        food.setInfo("This is a test food item.");
-        food.setName("Test Food");
-        food.setUpdatedAt(LocalDateTime.now());
+    public String addFood(@RequestBody FoodDto foodDto, @RequestHeader("Authorization") String token) {
+        System.out.println(foodDto);
+        // 处理时间
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime productionDate = LocalDateTime.parse(foodDto.getProductionDate(), formatter);
+        Food food = new Food(
+                null,
+                Integer.valueOf(JwtUtil.getUserId(token)),
+                foodDto.getCategory(),
+                foodDto.getName(),
+                foodDto.getImageUrl(),
+                productionDate,
+                foodDto.getShelfLifeDays(),
+                productionDate.plusDays(foodDto.getShelfLifeDays()),
+                foodDto.getQuantity(),
+                "fresh",
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                foodDto.getUnit(),
+                foodDto.getInfo(),
+                false
+        );
+        System.out.println(food);
 
         return foodService.addFood(food);
     }
@@ -55,7 +67,7 @@ public class FoodController {
 
     @PostMapping("/food/delete")
     @JwtToken
-    public String deleteFood(@RequestBody Food food ) {
+    public String deleteFood(@RequestBody Food food) {
         return foodService.deleteFoodById(food.getId().toString());
     }
 
