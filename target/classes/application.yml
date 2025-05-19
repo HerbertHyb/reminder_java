@@ -4,6 +4,10 @@ spring:
     username: root
     password: ${MYSQL_PWD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    username: reminder2025@126.com
+    password: ${MAIL_PWD}
+    host: smtp.126.com
 
 server:
   port: 8009

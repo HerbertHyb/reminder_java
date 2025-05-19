@@ -62,4 +62,26 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         return JSONUtil.toJsonStr(msg);
     }
 
+    public boolean updateFoodStatusById(String foodId, String status) {
+        Food food = foodMapper.selectById(foodId);
+        if (food != null) {
+            food.setStatus(status);
+            return foodMapper.updateById(food) > 0;
+        }
+        return false;
+    }
+
+    public Integer getRemainingDays(String foodId) {
+        Food food = foodMapper.selectById(foodId);
+        if (food != null) {
+            // 当前时间减去过期时间
+            long remainingTime = food.getExpiryDate().getSecond() - System.currentTimeMillis();
+            // 转换为天数
+            Integer remainingDays = Math.toIntExact(remainingTime / (1000 * 60 * 60 * 24));
+
+            return remainingDays;
+        }
+        return null;
+    }
+
 }

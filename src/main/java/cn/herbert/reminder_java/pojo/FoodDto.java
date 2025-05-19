@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class FoodDto {
+    private Integer id;
     private String category;
     private String name;
     private String imageUrl;
