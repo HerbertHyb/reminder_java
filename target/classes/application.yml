@@ -2,16 +2,16 @@ spring:
   datasource:
     url: jdbc:mysql://1.94.28.170:3306/food_expiry_reminder?characterEncoding=utf8
     username: root
-    password: ${MYSQL_PWD}
+    password: herbert12345678
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     username: reminder2025@126.com
-    password: ${MAIL_PWD}
+    password: VGrTuyysdu34NKWM
     host: smtp.126.com
 
 server:
   port: 8009
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

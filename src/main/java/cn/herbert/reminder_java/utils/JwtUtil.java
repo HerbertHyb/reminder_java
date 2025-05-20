@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class JwtUtil {
     //令牌有效时间
-    private static final long EXPIREE_TIME = 60 * 60 * 1000;
+    private static final long EXPIREE_TIME = 12 * 60 * 60 * 1000;
 
     private static final String SECRECT = "herbert";
 

@@ -21,8 +21,8 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
         List<Food> foodList = foodMapper.selectList(new QueryWrapper<Food>().eq("user_id", userId));
         Msg msg = null;
         if (foodList == null || foodList.isEmpty()) {
-            msg = Msg.fail("No food found");
-            return msg.toString();
+            msg = Msg.success("No food").add("food", foodList);
+            return JSONUtil.toJsonStr(msg);
         } else {
             msg = Msg.success("Food found").add("food", foodList);
         }
